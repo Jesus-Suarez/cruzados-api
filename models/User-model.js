@@ -47,7 +47,7 @@ const UserSchema = mongoose.Schema({
 		select: false,
 	},
 	verifiedAt: {
-		type: String,
+		type: Date,
 		select: false,
 	},
 });

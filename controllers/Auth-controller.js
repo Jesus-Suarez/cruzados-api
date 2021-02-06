@@ -38,27 +38,18 @@ const confirmationEmail = async (req, res) => {
 
 			//Extraemos el email del jwt desifrado
 			const { email } = tokenDesifrado;
-			console.log(tokenDesifrado);
-
-			//Revisamos que el usaurio ya se haya logeado
-			let usuario = await UserModel.findOne({ email });
-			if (!usuario) {
-				console.log('aun no estas registrado');
-				return res.status(400).json({ msg: 'Aun no te has registrado' });
-			}
 
 			//Creamos un objeto con los datos que se actualizaran
 			let newUser = { verifiedAt: Date() };
 
-			await UserModel.findOneAndUpdate({ email }, { $set: newUser });
-			//console.log(user);
+			let user = await UserModel.findOneAndUpdate({ email }, { $set: newUser });
+			if (user) return res.redirect(202, 'http://localhost:3000/login');
 		} catch (error) {
-			console.error(error);
-			return res.redirect('http://localhost:3000/error400');
+			return res.redirect(400, 'http://localhost:3000/error400');
 		}
 	}
 
-	return res.redirect('http://localhost:3000/login');
+	return res.redirect(400, 'http://localhost:3000/login');
 };
 
 const signIn = async (req, res) => {};
