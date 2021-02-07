@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const bcryptjs = require('bcryptjs');
 
 const UserSchema = mongoose.Schema({
@@ -47,7 +46,8 @@ const UserSchema = mongoose.Schema({
 		select: false,
 	},
 	verifiedAt: {
-		type: Date,
+		type: Boolean,
+		default: false,
 		select: false,
 	},
 });
@@ -67,7 +67,5 @@ UserSchema.pre('save', async function (next) {
 	user.password = await bcryptjs.hash(user.password, salt);
 	return next();
 });
-
-UserSchema.methods.isCorrrectPassword = async function (password, callback) {};
 
 module.exports = mongoose.model('User', UserSchema);
