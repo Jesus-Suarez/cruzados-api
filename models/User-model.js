@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcryptjs = require('bcryptjs');
+const path = require('path');
 
 const UserSchema = mongoose.Schema({
 	firstName: {
@@ -28,6 +29,7 @@ const UserSchema = mongoose.Schema({
 		select: false,
 	},
 	img: String,
+	//En este project no ocupo este campo
 	lastLogin: {
 		type: Date,
 		select: false,
@@ -67,5 +69,13 @@ UserSchema.pre('save', async function (next) {
 	user.password = await bcryptjs.hash(user.password, salt);
 	return next();
 });
+
+//UserSchema.methods.updatePassword=async function
+
+//Para guardar la direccion de la imagen en la DB
+UserSchema.methods.setImgUrl = function (fileName) {
+	this.img = path.resolve(__dirname, `../storage/img/${fileName}`);
+	console.log(path.resolve(__dirname, `../storage/img/${fileName}`));
+};
 
 module.exports = mongoose.model('User', UserSchema);
