@@ -21,7 +21,8 @@ const signUp = async (req, res) => {
 			email: user.email,
 		};
 		//Firma del JWT
-		let token = jwt.sign(payload, process.env.JWT_SECRET, {
+		let token = jw
+		.sign(payload, process.env.JWT_SECRET, {
 			expiresIn: '7d',
 		});
 		//Creamos la data que se enviara en el correo
@@ -183,7 +184,7 @@ const emailPasswordReset = async (req, res) => {
 const recoverPassword = async (req, res) => {};
 
 //Cambia la contraseña
-const changePassword = async (req, res) => {};
+const changePassword = async (req, res) => {};  
 
 module.exports = {
 	signUp,
